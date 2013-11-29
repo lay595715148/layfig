@@ -8,7 +8,7 @@ Layfig::setter('actions.action-provider', 'TudingActionProvider');
 Layfig::setter('actions.action-provider', 'TudingaActionProvider');
 Debugger::debug(Layfig::getter('actions.action-provider'));
 Layfig::setter('actions.action-provider', 'TudingbActionProvider', 'laybug');
-Layfig::setter('actions.action-provider', 'TudingActionProvider', 'laybug');
+Layfig::setter(array('actions.action-provider'), array('TudingActionProvider'), 'laybug');
 Debugger::debug(Layfig::getter('actions.action-provider', 'laybug'));
 $et = date('Y-m-d H:i:s').'.'.floor(microtime()*1000);
 Debugger::debug(array($st,$et));

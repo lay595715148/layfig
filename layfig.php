@@ -8,8 +8,9 @@ define('INIT_LAYFIG', true);
 
 /**
  * 节点数据接口类
+ * 
  * @author Lay Li
- *
+ *        
  */
 interface ILayfig {
     /**
@@ -115,7 +116,7 @@ class Layfig implements ILayfig {
     }
     /**
      * 检测是否符合类名格式
-     * 
+     *
      * @param string $classname
      *            类名
      * @return boolean
@@ -147,7 +148,7 @@ class Layfig implements ILayfig {
         if($this->checkKey($keystr)) {
             if(is_array($keystr) && $keystr) {
                 $node = array();
-                foreach ($keystr as $i=>$key) {
+                foreach($keystr as $i => $key) {
                     $node[$i] = $this->get($key);
                 }
             } else if(is_string($keystr) && $keystr) {
@@ -178,18 +179,18 @@ class Layfig implements ILayfig {
      */
     public function set($keystr, $value) {
         if(! $this->checkKey($keystr)) {
-            Debugger::debug('given key isnot supported;string,int is ok.', 'LAYFIG');
+            Debugger::warn('given key isnot supported;string,int is ok.', 'LAYFIG');
         } else {
             if(! $this->checkValue($value)) {
-                Debugger::debug('given value isnot supported;string,number,boolean is ok.', 'LAYFIG');
+                Debugger::warn('given value isnot supported;string,number,boolean is ok.', 'LAYFIG');
             } else {
                 if(! $this->checkKeyValue($keystr, $value)) {
-                    Debugger::debug('given key and value isnot match;if key is array,value must be array.', 'LAYFIG');
+                    Debugger::warn('given key and value isnot match;if key is array,value must be array.', 'LAYFIG');
                 } else {
                     $node = &$this->configuration;
                     if(is_array($keystr) && $keystr) {
-                        foreach ($keystr as $i=>$key) {
-                            $this->set($key, isset($value[$i])?$value[$i]:false);
+                        foreach($keystr as $i => $key) {
+                            $this->set($key, isset($value[$i]) ? $value[$i] : false);
                         }
                     } else if(is_string($keystr) && $keystr) {
                         $keys = explode('.', $keystr);
@@ -222,11 +223,12 @@ class Layfig implements ILayfig {
      */
     private function checkKey($key) {
         if(is_array($key)) {
-            foreach($key as $k) {
+            foreach($key as $i => $k) {
                 if(! $this->checkKey($k)) {
                     return false;
                 }
             }
+            return true;
         } else if(is_string($key) || is_int($key)) {
             return true;
         } else {
@@ -242,11 +244,12 @@ class Layfig implements ILayfig {
      */
     private function checkValue($value) {
         if(is_array($value)) {
-            foreach($value as $var) {
+            foreach($value as $i => $var) {
                 if(! $this->checkValue($var)) {
                     return false;
                 }
             }
+            return true;
         } else if(is_bool($value) || is_string($value) || is_numeric($value)) {
             return true;
         } else {
@@ -254,9 +257,9 @@ class Layfig implements ILayfig {
         }
     }
     /**
-     * 
-     * @param array $key
-     * @param array $values
+     *
+     * @param array $key            
+     * @param array $values            
      */
     private function checkKeyValue($key, $value) {
         if(is_array($key)) {
