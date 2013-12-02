@@ -161,6 +161,8 @@ class Layfig implements ILayfig {
                         return $default;
                     }
                 }
+            } else {
+                $node = &$this->configuration;
             }
             return $node;
         } else {
