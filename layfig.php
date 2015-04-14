@@ -144,7 +144,7 @@ class Layfig implements ILayfig {
      *            要获取的节点键名
      * @return array string number boolean
      */
-    public function get($keystr) {
+    public function get($keystr, $default = null) {
         if($this->checkKey($keystr)) {
             if(is_array($keystr) && $keystr) {
                 $node = array();
